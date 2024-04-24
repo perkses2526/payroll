@@ -144,7 +144,7 @@ function cstring($input, $conn)
 }
 
 
-function optiontags($res, $id)
+function optiontags($res, $id = "")
 {
     $opt = '';
     if (mysqli_num_rows($res) > 0) {
@@ -157,18 +157,27 @@ function optiontags($res, $id)
     echo $opt;
 }
 
-function setpages($count, $entries)
+function pages($sql, $entries)
 {
+    $count = 0;
+
+    if (is_string($sql)) {
+        $res = execquery($sql);
+        $count = mysqli_fetch_array($res)[0];
+    } else {
+        $count = $sql;
+    }
+
     $pages = '';
     if ($count > 0) {
-        $p = $count / $entries;
-        $p = ceil($p);
+        $p = ceil($count / $entries);
 
         for ($i = 0; $i < $p; $i++) {
-            $pages .= '<option value=\'' . $i . '\' >' . $i + 1 . '</option>';
+            $pages .= '<option value="' . $i . '">' . ($i + 1) . '</option>';
         }
     } else {
         $pages = '<option value="0">0</option>';
     }
+
     echo $pages;
 }

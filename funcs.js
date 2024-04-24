@@ -1,18 +1,6 @@
 let timeout;
 
 $(document).ready(function () {
-    /* 
-        setInterval(() => {
-            $.each($("select.selectize"), function (i, v) {
-                $(v).selectize(
-                    {
-                        sortField: "text",
-                        placeholder: "Select " + $('label[for="' + $(v).attr('name') + '"]').text()
-                    }
-                );
-                $(v).removeClass('selectize');
-            });
-        }, 500); */
     setInterval(() => {
         $('select.selectize').each(function (i, v) {
             $(v).removeClass('selectize');
@@ -52,39 +40,9 @@ $(document).ready(function () {
     }, 500);
 });
 
-
-async function cleardates(btn) {
-    $('#sel_stdate ,#sel_endate, #month').val('');
-    // setpages();
-}
-
 function getValue(data, name) {
     const item = data.find(item => item.name === name);
-    return item ? item.value : ''; // Return the value if found, otherwise return an empty string
-}
-
-function setterdate(btn) {
-    var m = $('#month');
-    var startDateInput = $('#sel_stdate');
-    var endDateInput = $('#sel_endate');
-
-    if (m.val() !== "") {
-        var currentYear = new Date().getFullYear(); // Get the current year
-
-        if ($(btn).html() === "1-15") {
-            // Set the start date to the 1st day of the selected month and the end date to the 15th day
-            startDateInput.val(currentYear + '-' + m.val().padStart(2, '0') + '-01');
-            endDateInput.val(currentYear + '-' + m.val().padStart(2, '0') + '-15');
-        } else if ($(btn).html() === "16-30") {
-            // Set the start date to the 16th day of the selected month and the end date to the last day of the month
-            startDateInput.val(currentYear + '-' + m.val().padStart(2, '0') + '-16');
-            endDateInput.val(currentYear + '-' + m.val().padStart(2, '0') + '-' + new Date(currentYear, m.val(), 0).getDate());
-        }
-        endDateInput.change();
-    } else {
-        reqfunc(m);
-    }
-
+    return item ? item.value : '';
 }
 
 function settbsort() {
@@ -119,7 +77,7 @@ function sortTable(th) {
     });
 }
 
-function areyousure(title, text) {
+function question(title, text) {
     return new Promise((resolve) => {
         Swal.fire({
             title: title,
@@ -163,19 +121,19 @@ function setDocTitle(titles) {
     document.title = titles;
 }
 
-function tsuccess(texts, sec) {
+function tsuccess(texts, sec = 3) {
     toast('success', 'Successful', texts, sec);
 }
 
-function terror(texts, sec) {
+function terror(texts, sec = 3) {
     toast('error', 'Error', (texts === "" ? `There's something wrong, please try again.` : texts), sec);
 }
 
-function twarning(texts, sec) {
+function twarning(texts, sec = 3) {
     toast('warning', 'Warning', texts, sec);
 }
 
-function ttimer(titles, sec) {
+function ttimer(titles, sec = 3) {
     let timerInterval
     Swal.fire({
         title: titles,
@@ -247,7 +205,7 @@ function htmltb_to_excel(tbid) {
     $(elems).remove();
     var file = XLSX.utils.table_to_book(data, {
         sheet: "Schedule",
-        raw: true
+        raw: false
     });
 
     XLSX.write(file, {
@@ -294,6 +252,7 @@ function printDiv(id) {
     newWin.document.close();
 
 }
+
 function checkall(elem) {
     var isChecked = $(elem).prop('checked');
     var tb = $(elem).closest('table');
@@ -389,7 +348,7 @@ function validator(elems) {
     return isValid;
 }
 
-function reqfunc(elem) {
+/* function reqfunc(elem) {
     dp = '';
     if (elem.hasClass("selectized")) {
         $(elem).closest('div').find('div.selectize-input').addClass('border border-danger');
@@ -402,10 +361,25 @@ function reqfunc(elem) {
             $(elem).removeClass('bg-danger bg-opacity-50');
         }, 3000);
     }
+} */
+
+function reqfunc(elem) {
+    let $input = $(elem).closest('div').find('div.selectize-input');
+    if (elem.hasClass("selectized")) {
+        $input.addClass('border border-danger');
+        setTimeout(() => {
+            $input.removeClass('border border-danger');
+        }, 3000);
+    } else {
+        $(elem).addClass('bg-danger bg-opacity-50');
+        setTimeout(() => {
+            $(elem).removeClass('bg-danger bg-opacity-50');
+        }, 3000);
+    }
 }
 
 function loadingsm(msg) {
-    return `<span class=" fs-6">` + msg + `</span><div class="spinner-border spinner-border-sm text-success" id="l" role="status"></div>`;
+    return `<span class="fs-6">${msg}</span><div class="spinner-border spinner-border-sm text-success" id="l" role="status"></div>`;
 }
 
 async function myajax(url, formData) {
@@ -422,6 +396,15 @@ async function myajax(url, formData) {
         console.log('Error: ' + error.statusText);
         return "";
     }
+}
+
+function format12hr(timeStr) {
+    const time = new Date("2000-01-01 " + timeStr);
+    return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+}
+
+function addslashes(str) {
+    return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
 
 function formatDateToYMD(date) {
