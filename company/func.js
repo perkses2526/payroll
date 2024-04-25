@@ -32,6 +32,13 @@ async function updatedept(btn) {
     if ($(department).val() === "") {
         reqfunc($(department));
         twarning('Please enter department');
+        $(btn).prop('disabled', false);
+        return;
+    }
+    if ($(department).val() === $(btn).attr('value')) {
+        reqfunc($(department));
+        twarning('No changes were made to department.');
+        $(btn).prop('disabled', false);
         return;
     }
 
@@ -62,7 +69,7 @@ async function editdepartment(btn) {
                 <input type = "text" id="department" value="${department}" name="department" class="form-control form-control-sm" placeholder="Add new department">
             </div>
             <div class="col-auto">
-                <button type = "submit" class="btn btn-warning btn-sm" onclick="updatedept(this);"><i class="bi bi-save"></i></button>
+                <button type = "submit" value="${department}" class="btn btn-warning btn-sm" onclick="updatedept(this);"><i class="bi bi-save"></i></button>
                 <button type = "button" class="btn btn-danger btn-sm" onclick="canceldept(this);"><i class="bi bi-x-square"></i></button>
             </div>
         </div>
