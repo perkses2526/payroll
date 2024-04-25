@@ -128,7 +128,7 @@ function sanitizeInput($input, $conn)
         if ($input === filter_var($input, FILTER_SANITIZE_EMAIL)) {
             $input = filter_var($input, FILTER_SANITIZE_EMAIL);
         } else {
-            $input = '';
+            $input = $input;
         }
         // Escape the input
         $input = mysqli_real_escape_string($conn, $input);

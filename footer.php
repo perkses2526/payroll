@@ -1,15 +1,19 @@
 <div class="modal fade" tabindex="-1" id="modal" role="dialog" data-bs-backdrop="static" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog" id="modalDialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle"></h5>
-                <button type="button" class="btn"><i class="bi bi-x"></i></button>
-            </div>
-            <div class="modal-body" id="modalBody">
-            </div>
-            <div class="modal-footer" id="modalFooter">
-                <button class="btn btn-primary btn-sm">Close</button>
-            </div>
+            <form onsubmit="return false">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn closemodal"><i class="bi bi-x"></i></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                </div>
+                <div class="modal-footer" id="modalFooter">
+                    <div id="btn_submit">
+                    </div>
+                    <button class="btn btn-danger btn-sm closemodal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

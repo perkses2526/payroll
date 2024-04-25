@@ -1,9 +1,9 @@
 <?php
 require_once '../header.php';
 
-if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin")) {
+/* if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin")) {
   echo '<script>window.location="../404.php"</script>';
-}
+} */
 ?>
 
 
@@ -20,7 +20,7 @@ if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin
   </div><!-- End Page Title -->
 
 
-  <section class="section dashboard">
+  <section class="dashboard">
     <div class="row">
 
       <div class="col-lg-12">
@@ -45,11 +45,13 @@ if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin
 
             </div>
           </div>
-
         </div>
+      </div>
+
+    </div>
   </section>
 
 </main>
-<script src="dashboard.js"></script>
+<script src="func.js"></script>
 
 <?php require_once '../footer.php'; ?>

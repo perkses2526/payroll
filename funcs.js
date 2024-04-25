@@ -39,7 +39,7 @@ $(document).ready(function () {
         });
     }, 500);
 
-    $('.modal-footer button, .modal-header button').click(function () {
+    $('.closemodal').click(function () {
         closeModal();
     });
 });
@@ -129,8 +129,8 @@ function tsuccess(texts, sec = 3) {
     toast('success', 'Successful', texts, sec);
 }
 
-function terror(texts, sec = 3) {
-    toast('error', 'Error', (texts === "" ? `There's something wrong, please try again.` : texts), sec);
+function terror(texts = `There's something wrong, please try again.`, sec = 3) {
+    toast('error', 'Error', texts, sec);
 }
 
 function twarning(texts, sec = 3) {
@@ -276,7 +276,6 @@ function setCheckbox(element) {
         checkbox.prop('checked', !checkbox.prop('checked'));
     }
 }
-
 function validator(elems) {
     var isValid = true;
     // Loop through all required inputs and selects
@@ -323,6 +322,18 @@ function validator(elems) {
                 return false; // Break out of loop if any input length is more than maximum
             }
 
+            // Check if input value is an email
+            if ($(this).attr("type") === "email") {
+                if (!validateEmail(inputValue)) {
+                    elemid = $(this).attr('id');
+                    txt = $('label[for="' + elemid + '"]').text();
+                    //terror(txt + " must be a valid email address.", 3);
+                    reqfunc($(this));
+                    isValid = false;
+                    return false; // Break out of loop if any input value is not a valid email
+                }
+            }
+
             // Check if input value is within the specified minimum and maximum values (for input type="number")
             if ($(this).attr("type") === "number") {
                 var minValue = $(this).attr("min");
@@ -350,6 +361,12 @@ function validator(elems) {
         }
     });
     return isValid;
+}
+
+// Function to validate email format
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
 }
 
 /* function reqfunc(elem) {
@@ -446,4 +463,5 @@ function setViewModal(title, size, body) {
 
 function closeModal() {
     $('#modal').modal('hide');
+    $('#btn_submit').html('');
 }
