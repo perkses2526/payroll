@@ -34,6 +34,9 @@ if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin
                 </select>
               </div>
               <div class="col-3 text-end">
+                <button class="btn btn-primary btn-sm" title="Add new company" onclick="setcompanyform(this);"><i class="bi bi-building-add"></i></button>
+              </div>
+              <div class="col-3 text-end">
                 <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Search...">
               </div>
               <div class="col-auto text-center">
@@ -53,26 +56,6 @@ if (!($_SESSION['usertype'] === "superadmin" || $_SESSION['usertype'] === "admin
           </form>
           <div class="table-responsive mt-3">
             <table class="table table-bordered table-hover text-center" id="company_tb">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Company name</th>
-                  <th>Company address</th>
-                  <th>Company tel no</th>
-                  <th>Company email address</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colspan="6"><button class="btn btn-primary btn-sm" title="Add new company" onclick="setcompanyform(this);"><i class="bi bi-building-add"></i></button></td>
-                </tr>
-                <tr>
-                  <td colspan="6"><span class=" fs-6">Fetching data...</span>
-                    <div class="spinner-border spinner-border-sm text-success" id="l" role="status"></div>
-                  </td>
-                </tr>
-              </tbody>
             </table>
           </div>
         </div>

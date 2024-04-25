@@ -8,7 +8,7 @@ class DatabaseConnection
     private $server = 'localhost';
     private $uname = 'root';
     private $pass = '';
-    private $db = 'xias';
+    private $db = 'payroll';
     /* 
     private $server = 'localhost';
     private $uname = 'id21228883_chsi';
@@ -205,3 +205,36 @@ function createDirectory($path)
         return "Folder Already Existing";
     }
 }
+
+function nores($colspan)
+{
+    $d = '
+    <tr>
+        <td colspan="' . $colspan . '">No data found</td>
+    </tr>';
+    return $d;
+}
+
+function sadmin()
+{
+    if ($_SESSION['usertype'] === "superadmin") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function crud($sql)
+{
+    $res = affected($sql);
+    if ($res > 0) {
+        return "success";
+    } else {
+        return "error";
+    }
+}
+
+
+$search = $_POST['search'] ?? '';
+$entries = $_POST['entries'] ?? '';
+$page = $_POST['page'] ?? '';
