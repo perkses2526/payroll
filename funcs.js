@@ -38,6 +38,10 @@ $(document).ready(function () {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     }, 500);
+
+    $('.modal-footer button, .modal-header button').click(function () {
+        closeModal();
+    });
 });
 
 function getValue(data, name) {
@@ -378,8 +382,9 @@ function reqfunc(elem) {
     }
 }
 
-function loadingsm(msg) {
-    return `<span class="fs-6">${msg}</span><div class="spinner-border spinner-border-sm text-success" id="l" role="status"></div>`;
+
+function loadingsm(msg = "") {
+    return `<span class=" fs-6">` + msg + `</span><div class="spinner-border spinner-border-sm text-success" id="l" role="status"></div>`;
 }
 
 async function myajax(url, formData) {
@@ -436,9 +441,9 @@ function setViewModal(title, size, body) {
     $('#modalDialog').removeClass().addClass("modal-dialog modal-" + size);
     $('#modalTitle').html(title);
     $('#modalBody').html(body);
-    $('#viewModal').modal('show');
+    $('#modal').modal('show');
 }
 
 function closeModal() {
-    $('#viewModal').modal('hide');
+    $('#modal').modal('hide');
 }

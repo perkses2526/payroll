@@ -22,10 +22,10 @@ async function signin(btn) {
         signin.append('password', pw.val());
         signin.append('signin', '');
         var res = await myajax(file, signin);
-        if (res === "1") {
+        if (res === "success") {
             ttimer('Successfully login!<br>Redirecting to dashboard!', 2);
             setTimeout(() => {
-                window.location = "dashboards/";
+                window.location = "dashboard/";
             }, 3000);
         } else {
             twarning('Username and password not found!', 3);

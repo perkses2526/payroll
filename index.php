@@ -38,7 +38,7 @@ if (isset($_SESSION['active'])) {
                   <div class="card">
                     <div class="card-body">
                       <div class="brand-logo text-center">
-                        <img src="assets/img/LOGO_DETAILED.jpg" class="w-100" alt="logo">
+                        <h1 class="mt-3">PAYROLL</h1>
                       </div>
                       <h6 class="font-weight-light">Sign in to continue.</h6>
                       <form class="pt-3">
@@ -50,7 +50,7 @@ if (isset($_SESSION['active'])) {
                           <label for="password" class="form-label">Password</label>
                           <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 text-center">
                           <button type="button" class="btn btn-success btn-lg btn-block font-weight-medium auth-form-btn" onclick="signin(this)">SIGN IN</button>
                         </div>
                       </form>

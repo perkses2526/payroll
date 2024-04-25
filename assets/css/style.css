@@ -1167,3 +1167,22 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+
+.pointing {
+  cursor: pointer;
+}
+
+.smaller-btn {
+  width: 30px;
+  height: 20px;
+  font-size: 5px;
+  padding: 0px;
+}
+
+.truncate-multiline {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -8,11 +8,13 @@ class DatabaseConnection
     private $server = 'localhost';
     private $uname = 'root';
     private $pass = '';
-    private $db = 'chsi';
-    /* private $server = 'localhost';
+    private $db = 'xias';
+    /* 
+    private $server = 'localhost';
     private $uname = 'id21228883_chsi';
     private $pass = '@ChsiSystem1234@';
-    private $db = 'id21228883_chsi'; */
+    private $db = 'id21228883_chsi'; 
+    */
     private $con;
 
     public function __construct()
@@ -34,16 +36,6 @@ class DatabaseConnection
             }
         }
     }
-
-    /* 
-    public function __construct()
-    {
-        $this->con = new mysqli($this->server, $this->uname, $this->pass, $this->db);
-
-        if ($this->con->connect_error) {
-            die("Connection failed: " . $this->con->connect_error);
-        }
-    } */
 
     public function getConnection()
     {
@@ -90,7 +82,6 @@ class DatabaseConnection
     }
 }
 
-
 global $db;
 $db = new DatabaseConnection();
 
@@ -121,25 +112,27 @@ function multiquery($sql)
 global $db;
 $conn = $db->getConnection();
 
-$pls = $_POST;
-$arrk = array_keys($_POST);
-$cl = count($arrk);
-
-for ($i = 0; $i < $cl; $i++) {
-    // Modify the original $_POST value with the sanitized value
-    $_POST[$arrk[$i]] = cstring($pls[$arrk[$i]], $conn);
+foreach ($_POST as $key => $value) {
+    $_POST[$key] = sanitizeInput($value, $conn);
 }
 
-function cstring($input, $conn)
+function sanitizeInput($input, $conn)
 {
+    // If $input is an array, return it without modification
     if (is_array($input)) {
-        // If $input is an array, return it without modification
         return $input;
     } else {
-        // If $input is not an array, add slashes and escape using mysqli_real_escape_string
-        $str = addslashes($input);
-        $str = mysqli_real_escape_string($conn, trim($str));
-        return $str;
+        // Validate and sanitize the input
+        $input = trim($input);
+        // Basic email validation
+        if ($input === filter_var($input, FILTER_SANITIZE_EMAIL)) {
+            $input = filter_var($input, FILTER_SANITIZE_EMAIL);
+        } else {
+            $input = '';
+        }
+        // Escape the input
+        $input = mysqli_real_escape_string($conn, $input);
+        return $input;
     }
 }
 
@@ -180,4 +173,35 @@ function pages($sql, $entries)
     }
 
     echo $pages;
+}
+
+function plarr($cl)
+{
+    $pls = $_POST;
+    $arrk = array_keys($_POST);
+    $arr = [];
+    for ($i = 0; $i < $cl; $i++) {
+        array_push($arr, $pls[$arrk[$i]]);
+    }
+    return $arr;
+}
+
+function createFile($originalFile, $destination)
+{
+    if (!copy($originalFile, $destination)) {
+    } else {
+    }
+}
+
+function createDirectory($path)
+{
+    if (!is_dir($path)) {
+        if (mkdir($path, 0777, true)) {  // 0777 grants full permissions, but use a more restrictive value in production.
+            return "Folder Created";
+        } else {
+            return "Failed to Create Folder";
+        }
+    } else {
+        return "Folder Already Existing";
+    }
 }
